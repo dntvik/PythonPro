@@ -1,19 +1,18 @@
 import functools
-import sys
 from collections import OrderedDict, defaultdict
 import requests
+from memory_profiler import memory_usage
 
 
 def memory_profiler_decorator(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        mem_before = sum(sys.getsizeof(arg) for arg in args) + sum(sys.getsizeof(val) for val in kwargs.values())
-        mem_before += sys.getsizeof(f)
+        mem_before = memory_usage()[0]
         result = f(*args, **kwargs)
-        mem_after = sum(sys.getsizeof(arg) for arg in args) + sum(sys.getsizeof(val) for val in kwargs.values())
-        mem_after += sys.getsizeof(result) + sys.getsizeof(f)
-        print(f"Memory usage before: {mem_before} bytes")
-        print(f"Memory usage after: {mem_after} bytes")
+        mem_after = memory_usage()[0]
+        print(f"Memory usage before: {mem_before} MiB")
+        print(f"Memory usage after: {mem_after} MiB")
+        print(f"Memory used by function: {mem_after - mem_before} MiB")
         return result
     return wrapper
 
