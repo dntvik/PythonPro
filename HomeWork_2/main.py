@@ -1,4 +1,4 @@
-from random import randint, choices
+from random import randint, choice, shuffle
 import string
 import pandas as pd
 from flask import Flask
@@ -8,13 +8,16 @@ app = Flask(__name__)
 
 @app.route("/generate-password")
 def generate_password():
-    password_length = (
-        randint(10, 20))
-
-    return "".join(
-        choices(
-            string.digits + string.ascii_letters +
-            string.punctuation, k=password_length))
+    password_length = randint(10, 20)
+    password = [
+        choice(string.ascii_lowercase),
+        choice(string.ascii_uppercase),
+        choice(string.digits),
+        choice(string.punctuation)]
+    password += [choice(string.ascii_letters + string.digits + string.punctuation)
+                 for i in range(password_length - 4)]
+    shuffle(password)
+    return ''.join(password)
 
 
 @app.route("/calculate_average")
