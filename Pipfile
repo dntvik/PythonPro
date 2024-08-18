@@ -16,7 +16,6 @@ memory_profiler = "*"
 
 [dev-packages]
 ipython = "*"
-mypy = "*"
 pylint = "*"
 
 [requires]
