@@ -12,19 +12,23 @@ query_args = {'genre': fields.Str(missing=None)}
 def stats_by_city(args):
     genre = args.get('genre')
     query = """
-            SELECT c.City, COUNT(ii.InvoiceId) AS SalesCount
-            FROM customers c
-            JOIN invoices i ON c.CustomerId = i.CustomerId
-            JOIN invoice_items ii ON i.InvoiceId = ii.InvoiceId
-            JOIN tracks t ON ii.TrackId = t.TrackId
-            JOIN genres g ON t.GenreId = g.GenreId
-            WHERE LOWER(g.Name) = LOWER(?)
-            GROUP BY c.City
-            ORDER BY SalesCount DESC
-            LIMIT 1;
+            WITH RankedCities AS (
+                SELECT c.City, COUNT(ii.InvoiceId) AS SalesCount,
+                       RANK() OVER (ORDER BY COUNT(ii.InvoiceId) DESC) AS Rank
+                FROM customers c
+                JOIN invoices i ON c.CustomerId = i.CustomerId
+                JOIN invoice_items ii ON i.InvoiceId = ii.InvoiceId
+                JOIN tracks t ON ii.TrackId = t.TrackId
+                JOIN genres g ON t.GenreId = g.GenreId
+                WHERE LOWER(g.Name) = LOWER(?)
+                GROUP BY c.City
+            )
+            SELECT City, SalesCount
+            FROM RankedCities
+            WHERE Rank = 1;
         """
     result = execute_query(query, (genre,))
     if result:
-        city = result[0][0]
-        return jsonify({"city": city, "genre": genre})
+        cities = [{"city": row[0], "sales_count": row[1]} for row in result]
+        return jsonify({"cities": cities, "genre": genre})
     return jsonify({"message": f"Genre '{genre}' not found"}), 404
