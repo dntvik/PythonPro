@@ -3,22 +3,21 @@ class Frange:
         if stop is None:
             self.start = 0
             self.stop = start
-            self.step = step
         else:
             self.start = start
             self.stop = stop
-            self.step = step
+        self.step = step
+        self.current = self.start
 
     def __iter__(self):
-        current = self.start
-        if self.step > 0:
-            while current < self.stop:
-                yield round(current, 10)
-                current += self.step
-        else:
-            while current > self.stop:
-                yield round(current, 10)
-                current += self.step
+        return self
+
+    def __next__(self):
+        if (self.step > 0 and self.current >= self.stop) or (self.step < 0 and self.current <= self.stop):
+            raise StopIteration
+        current_value = round(self.current, 10)
+        self.current += self.step
+        return current_value
 
 assert list(Frange(5)) == [0, 1, 2, 3, 4]
 assert list(Frange(2, 5)) == [2, 3, 4]
