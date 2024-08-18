@@ -1,0 +1,4 @@
+2. 5.1 реалізувати через in.
+
+Point(1, 2) in Circle(1, 2, 10) -> True or False
+p1 in c1 -> True or False
