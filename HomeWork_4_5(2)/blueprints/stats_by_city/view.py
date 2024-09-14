@@ -3,14 +3,15 @@ from webargs.flaskparser import use_args
 from webargs import fields
 from ..common.database_handler import execute_query
 
-genre_blueprint = Blueprint('stats_by_city', __name__)
+genre_blueprint = Blueprint("stats_by_city", __name__)
 
-query_args = {'genre': fields.Str(missing=None)}
+query_args = {"genre": fields.Str(missing=None)}
 
-@genre_blueprint.route('/', methods=['GET'])
-@use_args(query_args, location='query')
+
+@genre_blueprint.route("/", methods=["GET"])
+@use_args(query_args, location="query")
 def stats_by_city(args):
-    genre = args.get('genre')
+    genre = args.get("genre")
     query = """
             WITH RankedCities AS (
                 SELECT c.City, COUNT(ii.InvoiceId) AS SalesCount,

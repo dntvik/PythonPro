@@ -3,14 +3,15 @@ from webargs.flaskparser import use_args
 from webargs import fields
 from ..common.database_handler import execute_query
 
-country_blueprint = Blueprint('sales_by_country', __name__)
+country_blueprint = Blueprint("sales_by_country", __name__)
 
-query_args = {'country': fields.Str(missing=None)}
+query_args = {"country": fields.Str(missing=None)}
 
-@country_blueprint.route('/', methods=['GET'])
-@use_args(query_args, location='query')
+
+@country_blueprint.route("/", methods=["GET"])
+@use_args(query_args, location="query")
 def sales_by_country(args):
-    country = args.get('country')
+    country = args.get("country")
     try:
         if country:
             query = """

@@ -1,5 +1,5 @@
 class Frange:
-    def __init__(self, start, stop=None, step:[int, float]=1):
+    def __init__(self, start, stop=None, step: [int, float] = 1):
         if stop is None:
             self.start = 0
             self.stop = start
@@ -13,11 +13,14 @@ class Frange:
         return self
 
     def __next__(self):
-        if (self.step > 0 and self.current >= self.stop) or (self.step < 0 and self.current <= self.stop):
+        if (self.step > 0 and self.current >= self.stop) or (
+            self.step < 0 and self.current <= self.stop
+        ):
             raise StopIteration
         current_value = round(self.current, 10)
         self.current += self.step
         return current_value
+
 
 assert list(Frange(5)) == [0, 1, 2, 3, 4]
 assert list(Frange(2, 5)) == [2, 3, 4]
@@ -29,6 +32,6 @@ assert list(Frange(0, 5)) == [0, 1, 2, 3, 4]
 assert list(Frange(0, 0)) == []
 assert list(Frange(100, 0)) == []
 
-print('SUCCESS!')
+print("SUCCESS!")
 for i in Frange(1, 100, 3.5):
     print(i)

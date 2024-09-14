@@ -5,10 +5,7 @@ name = "pypi"
 
 [packages]
 requests = "*"
-jupyterlab = "*"
-notebook = "*"
 flask = "*"
-faker = "*"
 webargs = "*"
 httpx = "*"
 pandas = "*"
@@ -17,6 +14,9 @@ memory_profiler = "*"
 [dev-packages]
 ipython = "*"
 pylint = "*"
+faker = "*"
+flake8 = "*"
+black = "*"
 
 [requires]
 python_version = "3.12"

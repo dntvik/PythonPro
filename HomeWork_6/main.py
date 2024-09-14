@@ -1,5 +1,6 @@
 import math
 
+
 class Shape:
     def __init__(self, x, y):
         self.x = x
@@ -15,7 +16,7 @@ class Circle(Shape):
         self.radius = radius
 
     def square(self):
-        return math.pi*self.radius**2
+        return math.pi * self.radius**2
 
 
 class Rectangle(Shape):
@@ -25,7 +26,7 @@ class Rectangle(Shape):
         self.width = width
 
     def square(self):
-        return self.width*self.height
+        return self.width * self.height
 
 
 class Parallelogram(Rectangle):
@@ -35,17 +36,18 @@ class Parallelogram(Rectangle):
 
     def print_angle(self):
         print(self.angle)
+
     def square(self):
         angle_radians = math.radians(self.angle)
         return self.width * self.height * math.sin(angle_radians)
 
-
     def __str__(self):
         result = super().__str__()
-        return result + f'\nParallelogram: {self.width}, {self.height}, {self.angle}'
+        return result + f"\nParallelogram: {self.width}, {self.height}, {self.angle}"
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
+
 
 class Triangle(Shape):
     def __init__(self, x, y, base, height):
@@ -55,6 +57,7 @@ class Triangle(Shape):
 
     def square(self):
         return 0.5 * self.base * self.height
+
 
 class Scene:
     def __init__(self):

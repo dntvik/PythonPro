@@ -14,6 +14,7 @@ def memory_profiler_decorator(f):
         print(f"Memory usage after: {mem_after} MiB")
         print(f"Memory used by function: {mem_after - mem_before} MiB")
         return result
+
     return wrapper
 
 
@@ -47,10 +48,12 @@ def lfu_cache(max_limit=64):
             deco._frequency[cache_key] = 1
             deco._freq_order[1].append(cache_key)
             return result
+
         deco._cache = OrderedDict()
         deco._frequency = defaultdict(int)
         deco._freq_order = defaultdict(list)
         return deco
+
     return internal
 
 
