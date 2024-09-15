@@ -13,9 +13,7 @@ class Frange:
         return self
 
     def __next__(self):
-        if (self.step > 0 and self.current >= self.stop) or (
-            self.step < 0 and self.current <= self.stop
-        ):
+        if (self.step > 0 and self.current >= self.stop) or (self.step < 0 and self.current <= self.stop):
             raise StopIteration
         current_value = round(self.current, 10)
         self.current += self.step

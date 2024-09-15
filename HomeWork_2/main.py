@@ -15,10 +15,7 @@ def generate_password():
         choice(string.digits),
         choice(string.punctuation),
     ]
-    password += [
-        choice(string.ascii_letters + string.digits + string.punctuation)
-        for i in range(password_length - 4)
-    ]
+    password += [choice(string.ascii_letters + string.digits + string.punctuation) for i in range(password_length - 4)]
     shuffle(password)
     return "".join(password)
 
