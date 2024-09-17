@@ -7,7 +7,7 @@ def new_format(string):
     if i > 0:
         result.append(string[:i])
     for j in range(i, len(string), 3):
-        result.append(string[j : j + 3])
+        result.append(string[j:j + 3])
     return ".".join(result)
 
 
