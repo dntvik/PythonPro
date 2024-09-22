@@ -19,17 +19,13 @@ def generate_students_data(count):
             "last_name": fake.last_name(),
             "email": fake.email(),
             "password": fake.password(),
-            "birthday": fake.date_of_birth(minimum_age=18, maximum_age=60).strftime(
-                "%Y-%m-%d"
-            ),
+            "birthday": fake.date_of_birth(minimum_age=18, maximum_age=60).strftime("%Y-%m-%d"),
         }
         students.append(student)
     return students
 
 
-students_args = {
-    "count": fields.Int(load_default=100, validate=lambda val: 1 <= val <= 1000)
-}
+students_args = {"count": fields.Int(load_default=100, validate=lambda val: 1 <= val <= 1000)}
 
 
 @app.route("/generate_students")
@@ -81,9 +77,7 @@ def fetch_currency_symbol(currency_code):
     url = "https://test.bitpay.com/currencies"
     response = requests.get(url)
     data = response.json()
-    currency_symbols = {
-        currency["code"]: currency["symbol"] for currency in data["data"]
-    }
+    currency_symbols = {currency["code"]: currency["symbol"] for currency in data["data"]}
     return currency_symbols.get(currency_code.upper(), currency_code)
 
 
@@ -91,9 +85,7 @@ def get_bitcoin_value(currency="USD", count=1):
     api_url = f"https://bitpay.com/api/rates/{currency}"
     response = requests.get(api_url)
     if response.status_code != 200:
-        raise Exception(
-            f"Failed to fetch Bitcoin value: {response.status_code} {response.reason}"
-        )
+        raise Exception(f"Failed to fetch Bitcoin value: {response.status_code} {response.reason}")
     data = response.json()
     bitcoin_rate = data["rate"]
     converted_value = bitcoin_rate * count
